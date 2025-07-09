@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedudukan Pingat Rumah Sukan</title>
+    <!-- Pautan ke Google Font "Inter" -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Pautan ke fail CSS luaran -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Video Latar Belakang -->
+    <div class="video-background">
+        <!-- PENTING: Gantikan URL ini dengan URL embed YouTube video anda! -->
+        <!-- Untuk mendapatkan URL embed: -->
+        <!-- 1. Buka video YouTube yang anda inginkan. -->
+        <!-- 2. Klik "Share" (Kongsi) di bawah video. -->
+        <!-- 3. Pilih "Embed" (Benamkan). -->
+        <!-- 4. Salin URL dari atribut 'src' dalam kod <iframe> yang diberikan. -->
+        <!-- Pastikan anda menambah parameter seperti ?autoplay=1&loop=1&playlist=VIDEO_ID&mute=1&controls=0&showinfo=0&autohide=1 -->
+        <!-- untuk memastikan video dimainkan secara automatik, berulang, senyap, dan tanpa kawalan pemain. -->
+        <iframe
+            src="https://www.youtube.com/embed/sPNWblZj4wI?autoplay=1&loop=1&playlist=dQw4w9WgXcQ&mute=1&controls=0&showinfo=0&autohide=1"
+            frameborder="0"
+            allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            title="Background Video"
+        ></iframe>
+    </div>
+
+    <!-- Overlay Hitam di atas video -->
+    <div class="video-overlay"></div>
+
+    <!-- Kandungan Utama Laman Web -->
+    <div class="content-container">
+        <h1 class="main-title">
+            <span role="img" aria-label="pingat emas">🥇</span> Kedudukan Pingat Rumah Sukan <span role="img" aria-label="pingat gangsa">🥉</span>
+        </h1>
+
+        <p class="description-text">
+            Kemas kini secara langsung dari Google Sheet anda. Data disegarkan setiap 30 saat.
+        </p>
+
+        <!-- Bekas untuk jadual kedudukan pingat -->
+        <div id="medal-standings-container" class="data-card">
+            <div class="card-header">
+                <p class="last-updated-text" id="last-updated">Kemas Kini Terakhir: Belum dimuatkan</p>
+                <button id="refresh-button" class="refresh-button">
+                    <span class="loading-spinner hidden"></span>
+                    <svg class="refresh-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004 12v5h.582m15.356-2A8.001 8.001 0 0120 12V7h-.582m0 10.582V12m0 0a8.001 8.001 0 01-15.356 2M4 12h.001" />
+                    </svg>
+                    <span class="button-text">Segarkan Sekarang</span>
+                </button>
+            </div>
+
+            <div id="error-message" class="error-message hidden" role="alert">
+                <strong>Ralat:</strong> <span id="error-text"></span>
+            </div>
+
+            <div id="loading-spinner-initial" class="initial-loading-spinner">
+                <svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p>Memuatkan kedudukan pingat...</p>
+            </div>
+
+            <div id="medal-table-content" class="table-container">
+                <!-- Jadual akan dimuatkan di sini oleh JavaScript -->
+            </div>
+
+            <div id="no-data-message" class="no-data-message hidden">
+                <p>Tiada data kedudukan pingat untuk dipaparkan.</p>
+                <p>Sila pastikan Google Sheet anda diterbitkan dengan betul dan URL adalah tepat.</p>
+            </div>
+        </div>
+
+        <!-- Bekas untuk jumlah pingat keseluruhan -->
+        <div id="overall-medals-summary-container" class="data-card overall-summary-card hidden">
+            <h2 class="summary-title">Jumlah Pingat Keseluruhan</h2>
+            <div class="summary-grid">
+                <div class="summary-item gold-bg">
+                    <p class="summary-label">Emas</p>
+                    <p class="summary-value" id="total-gold">0</p>
+                </div>
+                <div class="summary-item silver-bg">
+                    <p class="summary-label">Perak</p>
+                    <p class="summary-value" id="total-silver">0</p>
+                </div>
+                <div class="summary-item bronze-bg">
+                    <p class="summary-label">Gangsa</p>
+                    <p class="summary-value" id="total-bronze">0</p>
+                </div>
+                <div class="summary-item total-bg">
+                    <p class="summary-label">Jumlah Keseluruhan</p>
+                    <p class="summary-value" id="total-overall">0</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> Kedudukan Pingat Rumah Sukan. Dibangunkan oleh Sir Akmal.</p>
+        </footer>
+    </div>
+
+    <!-- Pautan ke fail JavaScript luaran -->
+    <script src="script.js"></script>
+</body>
+</html>

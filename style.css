@@ -1,0 +1,415 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden; /* Mencegah skrol mendatar akibat video */
+    background-color: #000; /* Latar belakang lalai jika video tidak dimuatkan */
+}
+
+/* Animasi berputar untuk ikon refresh */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-spin-fast {
+    animation: spin 1s linear infinite;
+}
+
+/* Gaya untuk video latar belakang */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -2; /* Di belakang kandungan utama */
+}
+
+.video-background iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Pastikan video meliputi seluruh ruang */
+    pointer-events: none; /* Elakkan interaksi pengguna dengan video */
+}
+
+/* Gaya untuk overlay hitam */
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Hitam dengan kelegapan 60% */
+    z-index: -1; /* Di atas video, di bawah kandungan utama */
+}
+
+/* Pastikan kandungan utama berada di atas overlay dan video */
+.content-container {
+    position: relative;
+    z-index: 1;
+    padding: 1rem; /* p-4 sm:p-8 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Pastikan ia meliputi ketinggian penuh */
+    color: #f3f4f6; /* Warna teks lalai untuk kontras dengan latar belakang gelap */
+}
+
+/* Gaya untuk tajuk utama */
+.main-title {
+    font-size: 2.25rem; /* text-4xl */
+    line-height: 2.5rem; /* leading-10 */
+    font-weight: 800; /* font-extrabold */
+    text-align: center;
+    color: #2563eb; /* text-blue-800 */
+    margin-bottom: 1.5rem; /* mb-6 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* drop-shadow-lg */
+}
+
+@media (min-width: 640px) { /* sm:breakpoint */
+    .main-title {
+        font-size: 3rem; /* sm:text-5xl */
+        line-height: 1; /* sm:leading-none */
+    }
+}
+
+/* Gaya untuk perenggan penerangan */
+.description-text {
+    font-size: 1.125rem; /* text-lg */
+    line-height: 1.75rem; /* leading-7 */
+    color: #e5e7eb; /* text-gray-200 */
+    margin-bottom: 2rem; /* mb-8 */
+    text-align: center;
+    max-width: 42rem; /* max-w-2xl */
+    background-color: rgba(0, 0, 0, 0.5); /* bg-black bg-opacity-50 */
+    padding: 0.75rem; /* p-3 */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+}
+
+/* Gaya untuk bekas data (jadual dan ringkasan) */
+.data-card {
+    width: 100%;
+    max-width: 64rem; /* max-w-4xl */
+    background-color: rgba(255, 255, 255, 0.9); /* bg-white bg-opacity-90 */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-2xl */
+    padding: 1.5rem; /* p-6 */
+    margin-bottom: 2rem; /* mb-8 */
+    border: 1px solid #bfdbfe; /* border border-blue-200 */
+}
+
+@media (max-width: 639px) { /* Adjust padding for smaller screens */
+    .data-card {
+        padding: 1rem; /* p-4 */
+    }
+}
+
+/* Gaya untuk header kad (butang refresh dan masa kemas kini) */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem; /* mb-4 */
+}
+
+.last-updated-text {
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.25rem; /* leading-4 */
+    color: #6b7280; /* text-gray-500 */
+}
+
+.refresh-button {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem; /* px-4 py-2 */
+    background-color: #2563eb; /* bg-blue-600 */
+    color: #ffffff; /* text-white */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.refresh-button:hover {
+    background-color: #1d4ed8; /* hover:bg-blue-700 */
+    transform: scale(1.05); /* hover:scale-105 */
+}
+
+.refresh-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 */
+}
+
+.refresh-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.refresh-icon {
+    height: 1.25rem; /* h-5 */
+    width: 1.25rem; /* w-5 */
+    margin-right: 0.5rem; /* mr-2 */
+}
+
+.loading-spinner {
+    display: inline-block;
+    height: 1.25rem; /* h-5 */
+    width: 1.25rem; /* w-5 */
+    margin-right: 0.5rem; /* mr-2 */
+    color: #ffffff; /* text-white */
+    animation: spin 1s linear infinite;
+}
+
+.loading-spinner::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 4px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+}
+
+.button-text {
+    /* No specific styles needed, just to make sure it's visible */
+}
+
+/* Gaya untuk mesej ralat */
+.error-message {
+    background-color: #fee2e2; /* bg-red-100 */
+    border: 1px solid #ef4444; /* border-red-400 */
+    color: #b91c1c; /* text-red-700 */
+    padding: 0.75rem 1rem; /* px-4 py-3 */
+    border-radius: 0.5rem; /* rounded-lg */
+    position: relative;
+    margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Gaya untuk spinner pemuatan awal */
+.initial-loading-spinner {
+    text-align: center;
+    padding-top: 2.5rem; /* py-10 (half) */
+    padding-bottom: 2.5rem; /* py-10 (half) */
+    color: #6b7280; /* text-gray-500 */
+}
+
+.initial-loading-spinner .spinner-icon {
+    height: 2.5rem; /* h-10 */
+    width: 2.5rem; /* w-10 */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.75rem; /* mb-3 */
+    color: #3b82f6; /* text-blue-500 */
+    animation: spin 1s linear infinite;
+}
+
+/* Gaya untuk bekas jadual */
+.table-container {
+    overflow-x: auto;
+}
+
+/* Gaya untuk jadual */
+.medal-table {
+    min-width: 100%;
+    background-color: #ffffff; /* bg-white */
+    border: 1px solid #e5e7eb; /* border border-gray-200 */
+    border-radius: 0.5rem; /* rounded-lg */
+    border-collapse: collapse; /* Ensure borders collapse nicely */
+}
+
+.medal-table thead {
+    background-color: #2563eb; /* bg-blue-600 */
+    color: #ffffff; /* text-white */
+}
+
+.medal-table th {
+    padding: 0.75rem 1rem; /* py-3 px-4 */
+    text-align: left;
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600; /* font-semibold */
+    text-transform: uppercase; /* uppercase */
+    letter-spacing: 0.05em; /* tracking-wider */
+}
+
+.medal-table th:first-child {
+    border-top-left-radius: 0.5rem; /* rounded-tl-lg */
+}
+
+.medal-table th:last-child {
+    border-top-right-radius: 0.5rem; /* rounded-tr-lg */
+}
+
+.medal-table tbody tr {
+    border-bottom: 1px solid #e5e7eb; /* divide-y divide-gray-200 */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.medal-table tbody tr:last-child {
+    border-bottom: none; /* Remove border for last row */
+}
+
+/* Warna baris rumah sukan */
+.row-cyborg {
+    background-color: #fecaca; /* bg-red-200 */
+    color: #b91c1c; /* text-red-800 */
+}
+.row-cyborg:hover {
+    background-color: #fca5a5; /* hover:bg-red-300 */
+}
+
+.row-mecha {
+    background-color: #bfdbfe; /* bg-blue-200 */
+    color: #1e40af; /* text-blue-800 */
+}
+.row-mecha:hover {
+    background-color: #93c5fd; /* hover:bg-blue-300 */
+}
+
+.row-techno {
+    background-color: #dcfce7; /* bg-green-200 */
+    color: #166534; /* text-green-800 */
+}
+.row-techno:hover {
+    background-color: #a7f3d0; /* hover:bg-green-300 */
+}
+
+.row-voltra {
+    background-color: #fef08a; /* bg-yellow-200 */
+    color: #b45309; /* text-yellow-800 */
+}
+.row-voltra:hover {
+    background-color: #fde047; /* hover:bg-yellow-300 */
+}
+
+/* Gaya lalai untuk baris lain */
+.row-default {
+    background-color: #ffffff; /* bg-white */
+    color: #374151; /* text-gray-800 */
+}
+.row-default:hover {
+    background-color: #f3f4f6; /* hover:bg-gray-100 */
+}
+
+.medal-table td {
+    padding: 0.75rem 1rem; /* py-3 px-4 */
+    font-weight: 500; /* font-medium */
+    white-space: nowrap; /* whitespace-nowrap */
+}
+
+.medal-table td:nth-child(2), /* Emas */
+.medal-table td:nth-child(3), /* Perak */
+.medal-table td:nth-child(4) { /* Gangsa */
+    text-align: center;
+    color: #4b5563; /* text-gray-700 */
+}
+
+.medal-table td:last-child { /* Jumlah */
+    text-align: center;
+    font-weight: 700; /* font-bold */
+    color: #2563eb; /* text-blue-700 */
+    border-bottom-right-radius: 0.5rem; /* rounded-br-lg */
+}
+
+/* Mesej tiada data */
+.no-data-message {
+    text-align: center;
+    padding-top: 2.5rem; /* py-10 */
+    padding-bottom: 2.5rem; /* py-10 */
+    color: #6b7280; /* text-gray-500 */
+}
+
+/* Gaya untuk ringkasan jumlah pingat keseluruhan */
+.overall-summary-card {
+    margin-top: 1rem; /* mt-4 */
+    border: 1px solid #a7f3d0; /* border border-green-200 */
+}
+
+.summary-title {
+    font-size: 1.5rem; /* text-2xl */
+    line-height: 2rem; /* leading-8 */
+    font-weight: 700; /* font-bold */
+    text-align: center;
+    color: #047857; /* text-green-700 */
+    margin-bottom: 1rem; /* mb-4 */
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* grid-cols-2 */
+    gap: 1rem; /* gap-4 */
+    text-align: center;
+}
+
+@media (min-width: 640px) { /* sm:breakpoint */
+    .summary-grid {
+        grid-template-columns: repeat(4, 1fr); /* sm:grid-cols-4 */
+    }
+}
+
+.summary-item {
+    padding: 0.75rem; /* p-3 */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+}
+
+.summary-label {
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.25rem; /* leading-4 */
+}
+
+.summary-value {
+    font-size: 1.875rem; /* text-3xl */
+    line-height: 2.25rem; /* leading-9 */
+    font-weight: 800; /* font-extrabold */
+}
+
+.gold-bg {
+    background-color: #fefcbf; /* bg-yellow-100 */
+}
+.gold-bg .summary-label, .gold-bg .summary-value {
+    color: #92400e; /* text-yellow-800 / text-yellow-700 */
+}
+
+.silver-bg {
+    background-color: #f3f4f6; /* bg-gray-100 */
+}
+.silver-bg .summary-label, .silver-bg .summary-value {
+    color: #374151; /* text-gray-800 / text-gray-700 */
+}
+
+.bronze-bg {
+    background-color: #ffedd5; /* bg-orange-100 */
+}
+.bronze-bg .summary-label, .bronze-bg .summary-value {
+    color: #9a3412; /* text-orange-800 / text-orange-700 */
+}
+
+.total-bg {
+    background-color: #dbeafe; /* bg-blue-100 */
+}
+.total-bg .summary-label, .total-bg .summary-value {
+    color: #1e40af; /* text-blue-800 / text-blue-700 */
+}
+
+/* Gaya footer */
+.main-footer {
+    margin-top: 2rem; /* mt-8 */
+    color: #e5e7eb; /* text-gray-200 */
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.25rem; /* leading-4 */
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* bg-black bg-opacity-50 */
+    padding: 0.5rem 1rem; /* p-2 */
+    border-radius: 0.5rem; /* rounded-lg */
+}
+
+/* Utility classes for showing/hiding elements */
+.hidden {
+    display: none !important;
+}
